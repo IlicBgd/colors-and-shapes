@@ -8,8 +8,8 @@ public class ShapesGenerator : MonoBehaviour
     Sprite[] sprites;
     [SerializeField]
     Shape shapePrefab;
-    
-
+    [SerializeField]
+    AudioSource pickedSound;
     [SerializeField]
     int width = 3;
     [SerializeField]
@@ -46,6 +46,7 @@ public class ShapesGenerator : MonoBehaviour
                 shape.name = sprites[counter].name;
                 shape.slotsGenerator = slotsGenerator;
                 shape.shapeSprite.sortingOrder = 1;
+                shape.SoundInitialization(pickedSound);
                 counter--;
             }
         }

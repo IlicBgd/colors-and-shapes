@@ -10,6 +10,12 @@ public class SlotsGenerator : MonoBehaviour
     Slot slotPrefab;
     [SerializeField]
     Vector2 gridSize;
+    [SerializeField]
+    AudioSource errorSound;
+    [SerializeField]
+    AudioSource popSound;
+    [SerializeField]
+    AudioSource endgameSound;
 
     public HelpWindow endgameWindow;
     public int slotsCounter = 0;
@@ -25,7 +31,7 @@ public class SlotsGenerator : MonoBehaviour
     {
         startPosition = transform.position;
         int randomSprite;
-        int randomNumberRotate;
+        //int randomNumberRotate;
         //float[] rotateBool = new float[2] { 0, 90 };
 
         offset.x = slotPrefab.slotSize.size.x * slotPrefab.transform.localScale.x * 2.5f;
@@ -39,11 +45,17 @@ public class SlotsGenerator : MonoBehaviour
                 slot = Instantiate(slotPrefab, newPosition, Quaternion.identity, transform);
                 randomSprite = Random.Range(0, sprites.Length);
                 slot.slotSprite.sprite = sprites[randomSprite];
-                randomNumberRotate = Random.Range(0, 2);
+                //randomNumberRotate = Random.Range(0, 2);
                 slot.transform.Rotate(0, 0, Random.Range(0f,360f));
                 slot.name = sprites[randomSprite].name;
+                slot.InitializeSounds(errorSound, popSound);
                 slotsCounter++;
             }
         }
+    }
+    public void OpenWindow()
+    {
+        endgameWindow.Open();
+        endgameSound.Play();
     }
 }

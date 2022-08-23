@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class HelpWindow : MonoBehaviour
 {
@@ -27,7 +28,10 @@ public class HelpWindow : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            StartCoroutine(Fade(true));
+            canvasGroup.DOFade(1f, fadeIn).SetEase(curve);
+            canvasGroup.blocksRaycasts = isOpen;
+            canvasGroup.interactable = isOpen;
+            //StartCoroutine(Fade(true));
         }
     }
 
@@ -35,28 +39,32 @@ public class HelpWindow : MonoBehaviour
     {
         if (isOpen)
         {
-            StartCoroutine(Fade(false));
+            //StartCoroutine(Fade(false));
+            isOpen = false;
+            canvasGroup.DOFade(0f, fadeOut).SetEase(curve);
+            canvasGroup.blocksRaycasts = isOpen;
+            canvasGroup.interactable = isOpen;
         }
     }
 
-    public IEnumerator Fade(bool isOpen)
-    {
-        float time = 0f;
-        float start = canvasGroup.alpha;
-        float duration = isOpen ? fadeIn : fadeOut;
-        float target = isOpen ? 1 : 0;
+    //public IEnumerator Fade(bool isOpen)
+    //{
+    //    float time = 0f;
+    //    float start = canvasGroup.alpha;
+    //    float duration = isOpen ? fadeIn : fadeOut;
+    //    float target = isOpen ? 1 : 0;
 
-        this.isOpen = isOpen;
-        canvasGroup.blocksRaycasts = isOpen;
-        canvasGroup.interactable = isOpen;
+    //    this.isOpen = isOpen;
+    //    canvasGroup.blocksRaycasts = isOpen;
+    //    canvasGroup.interactable = isOpen;
 
-        while (time < 1)
-        {
-            time += Time.deltaTime / duration;
-            canvasGroup.alpha = Mathf.Lerp(start, target, curve.Evaluate(time));
-            yield return null;
-        }
-    }
+    //    while (time < 1)
+    //    {
+    //        time += Time.deltaTime / duration;
+    //        canvasGroup.alpha = Mathf.Lerp(start, target, curve.Evaluate(time));
+    //        yield return null;
+    //    }
+    //}
     public void ForceFade(bool isOpen)
     {
         float target = isOpen ? 1 : 0;

@@ -16,6 +16,7 @@ public class Shape : Item
 
     float animationDuration = 0.3f;
 
+    AudioSource pickedSound;
     //Vector2 currentScale;
     public override void OnItemDropped()
     {
@@ -29,13 +30,15 @@ public class Shape : Item
                 transform.localRotation = slot.transform.localRotation;
                 this.enabled = false;
                 //StartCoroutine(SlotAnimation());
-                transform.DOScale(slot.transform.localScale * 1.05f, animationDuration).SetEase(Ease.InOutSine);
-                shapeSprite.sortingOrder = 1;
                 slotsGenerator.endgameCounter++;
-                if (slotsGenerator.endgameCounter == slotsGenerator.slotsCounter)
+                transform.DOScale(slot.transform.localScale * 1.05f, animationDuration).SetEase(Ease.InOutSine).OnComplete(() =>
                 {
-                    slotsGenerator.endgameWindow.Open();
-                }
+                    if (slotsGenerator.endgameCounter == slotsGenerator.slotsCounter)
+                    {
+                        slotsGenerator.OpenWindow();
+                    }
+                });
+                shapeSprite.sortingOrder = 1;
             }
         }
         else
@@ -48,6 +51,7 @@ public class Shape : Item
         shapeSprite.sortingOrder = 3;
         CreateClone();
         transform.localScale = new Vector2(0.5f, 0.5f);
+        pickedSound.Play();
     }
     void CreateClone()
     {
@@ -56,6 +60,11 @@ public class Shape : Item
         clone.shapeSprite.sprite = this.shapeSprite.sprite;
         clone.shapeSprite.sortingOrder = 1;
         clone.name = this.name;
+        clone.SoundInitialization(pickedSound);
+    }
+    public void SoundInitialization(AudioSource pickedSound)
+    {
+        this.pickedSound = pickedSound;
     }
     //public IEnumerator SlotAnimation()
     //{
