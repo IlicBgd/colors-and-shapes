@@ -29,7 +29,7 @@ public class Shape : Item
                 transform.localRotation = slot.transform.localRotation;
                 this.enabled = false;
                 //StartCoroutine(SlotAnimation());
-                transform.DOScale(slot.transform.localScale, animationDuration).SetEase(Ease.InOutSine);
+                transform.DOScale(slot.transform.localScale * 1.05f, animationDuration).SetEase(Ease.InOutSine);
                 shapeSprite.sortingOrder = 1;
                 slotsGenerator.endgameCounter++;
                 if (slotsGenerator.endgameCounter == slotsGenerator.slotsCounter)
@@ -47,7 +47,7 @@ public class Shape : Item
     {
         shapeSprite.sortingOrder = 3;
         CreateClone();
-        transform.localScale = new Vector2(0.8f, 0.8f);
+        transform.localScale = new Vector2(0.5f, 0.5f);
     }
     void CreateClone()
     {

@@ -19,7 +19,7 @@ public class Slot : Tools.DragAndDrop.Slot
             ((Shape)item).slot = this;
             isTaken = true;
         }
-        else
+        else if (!isTaken)
         {
             transform.DOShakePosition(shakeDuration,new Vector3(0.2f, 0, 0), 70, 0);
         }

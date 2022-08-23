@@ -26,7 +26,7 @@ public class SlotsGenerator : MonoBehaviour
         startPosition = transform.position;
         int randomSprite;
         int randomNumberRotate;
-        float[] rotateBool = new float[2] { 0, 90 };
+        //float[] rotateBool = new float[2] { 0, 90 };
 
         offset.x = slotPrefab.slotSize.size.x * slotPrefab.transform.localScale.x * 2.5f;
         offset.y = slotPrefab.slotSize.size.y * slotPrefab.transform.localScale.y * 1.5f;
@@ -40,7 +40,7 @@ public class SlotsGenerator : MonoBehaviour
                 randomSprite = Random.Range(0, sprites.Length);
                 slot.slotSprite.sprite = sprites[randomSprite];
                 randomNumberRotate = Random.Range(0, 2);
-                slot.transform.Rotate(0, 0, rotateBool[randomNumberRotate]);
+                slot.transform.Rotate(0, 0, Random.Range(0f,360f));
                 slot.name = sprites[randomSprite].name;
                 slotsCounter++;
             }
